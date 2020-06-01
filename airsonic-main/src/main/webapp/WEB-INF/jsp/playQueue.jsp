@@ -152,12 +152,10 @@
     }
 
     function onShowPlayQueue() {
-      var height = $("body").height() + 25;
-      height = Math.min(height, window.top.innerHeight * 0.8);
-      setFrameHeight(height);
+      setFrameHeight(getPlayerHeight());
       scrollToCurrentPlaying();
-      $("html").css("overflow-y", "");
       isVisible = true;
+      $("html").css("overflow-y", "");
       $(".playqueue-shown").show();
       $(".playqueue-hidden").hide();
     }
@@ -165,6 +163,11 @@
     function onTogglePlayQueue() {
       if (isVisible) onHidePlayQueue();
       else onShowPlayQueue();
+    }
+
+    function getPlayerHeight() {
+        var bodyHeight = $("body").height() + 25;
+        return Math.min(bodyHeight, window.top.innerHeight * 0.8);
     }
 
     function initAutoHide() {
@@ -693,6 +696,8 @@
         if (jukeboxVolume) {
             jukeboxVolume.slider("option", "value", Math.floor(playQueue.gain * 100));
         }
+
+        setFrameHeight(getPlayerHeight());
 
     <c:if test="${model.player.web}">
         triggerPlayer(playQueue.startPlayerAt, playQueue.startPlayerAtPosition);
