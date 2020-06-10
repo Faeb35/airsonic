@@ -882,7 +882,11 @@
             var image = $("#currentImage" + id);
 
             if (image) {
+<<<<<<< HEAD
                 if (i == currentSongIndex) {
+=======
+                if (song.streamUrl == currentStreamUrl) {
+>>>>>>> f09071dc... Hightlight table row with current playing track
                     image.parents("tr").addClass("current-playing");
                     image.show();
                 } else {
