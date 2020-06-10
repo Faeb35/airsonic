@@ -57,6 +57,9 @@
     // initialize index of the song currently played
     var currentSongIndex = -1;
 
+    // Should we scroll to the current playing track after onPlaying
+    var isScrollToCurrentPlaying = false;
+
     // Initialize the Cast player (ChromeCast support)
     var CastPlayer = new CastPlayer();
 
@@ -150,6 +153,7 @@
 
     function onShowPlayQueue() {
       setFrameHeight(getPlayerHeight());
+      scrollToCurrentPlaying();
       isVisible = true;
       $("html").css("overflow-y", "");
       $(".playqueue-shown").show();
@@ -218,6 +222,9 @@
      */
     function onPlaying() {
         highlightCurrentPlaying();
+        if (isScrollToCurrentPlaying) {
+            scrollToCurrentPlaying();
+        }
 
         if (currentSong) {
             updateWindowTitle(currentSong);
@@ -244,6 +251,14 @@
 
         // Whenever playback starts, show a notification for the current playing song.
         $('#audioPlayer').on("playing", onPlaying);
+
+        // Add click event listener to play button
+        $('.mejs__playpause-button').click(function() {
+            if (isAudioPlayerPlaying()) {
+                //scrollToCurrentPlaying();
+                isScrollToCurrentPlaying = true;
+            }
+        });
     }
 
     function getPlayQueue() {
@@ -302,9 +317,13 @@
             if (playing) onStop();
             else onStart();
         } else if ($('#audioPlayer').get(0)) {
-            var playing = $("#audioPlayer").get(0).paused != null && !$("#audioPlayer").get(0).paused;
-            if (playing) onStop();
-            else onStart();
+            if (isAudioPlayerPlaying()) {
+                onStop();
+            } else {
+                isScrollToCurrentPlaying = true;
+                onStart();
+                //scrollToCurrentPlaying();
+            }
         } else {
             playQueueService.toggleStartStop(playQueueCallback);
         }
@@ -373,10 +392,14 @@
         } else if (wrap) {
             index = index % songs.length;
         }
+        isScrollToCurrentPlaying = true;
         onSkip(index);
+        //scrollToCurrentPlaying();
     }
     function onPrevious() {
+        isScrollToCurrentPlaying = true;
         onSkip(parseInt(getCurrentSongIndex()) - 1);
+        //scrollToCurrentPlaying();
     }
     function onPlay(id) {
         playQueueService.play(id, playQueueCallback);
@@ -873,8 +896,27 @@
         }
     }
 
+    function scrollToCurrentPlaying() {
+        var container = $("html,body");
+        var target = $(".current-playing");
+        if (target) {
+            container.animate({
+                scrollTop: Math.floor(target.offset().top - 3.5 * target.height())
+            }, 150, function() {
+                isScrollToCurrentPlaying = false;
+            });
+        }
+    }
+
     function getCurrentSongIndex() {
         return currentSongIndex;
+    }
+
+    function isAudioPlayerPlaying() {
+        var isPlaying = $("#audioPlayer").get(0) &&
+            $("#audioPlayer").get(0).getPaused() != null &&
+            !$("#audioPlayer").get(0).getPaused();
+        return isPlaying;
     }
 
     <!-- actionSelected() is invoked when the users selects from the "More actions..." combo box. -->
