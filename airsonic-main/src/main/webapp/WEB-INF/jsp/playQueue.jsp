@@ -322,16 +322,10 @@
             if (isAudioPlayerPlaying()) {
                 onStop();
             } else {
-<<<<<<< HEAD
                 if (!isMouseOverTrackList()) {
                     isScrollToCurrentPlaying = true;
                 }
                 onStart();
-=======
-                isScrollToCurrentPlaying = true;
-                onStart();
-                //scrollToCurrentPlaying();
->>>>>>> b0c7b670... Merge Scroll to current playing track
             }
         } else {
             playQueueService.toggleStartStop(playQueueCallback);
@@ -401,26 +395,15 @@
         } else if (wrap) {
             index = index % songs.length;
         }
-<<<<<<< HEAD
         if (!isMouseOverTrackList()) {
             isScrollToCurrentPlaying = true;
         }
-=======
-        isScrollToCurrentPlaying = true;
->>>>>>> b0c7b670... Merge Scroll to current playing track
         onSkip(index);
-        //scrollToCurrentPlaying();
     }
     function onPrevious() {
-<<<<<<< HEAD
         if (!isMouseOverTrackList()) {
             isScrollToCurrentPlaying = true;
         }
-=======
-        isScrollToCurrentPlaying = true;
->>>>>>> b0c7b670... Merge Scroll to current playing track
-        onSkip(parseInt(getCurrentSongIndex()) - 1);
-        //scrollToCurrentPlaying();
     }
     function onPlay(id) {
         playQueueService.play(id, playQueueCallback);
@@ -906,11 +889,7 @@
             var image = $("#currentImage" + id);
 
             if (image) {
-<<<<<<< HEAD
                 if (i == currentSongIndex) {
-=======
-                if (song.streamUrl == currentStreamUrl) {
->>>>>>> f09071dc... Hightlight table row with current playing track
                     image.parents("tr").addClass("current-playing");
                     image.show();
                 } else {
@@ -924,11 +903,7 @@
     function scrollToCurrentPlaying() {
         var container = $("html,body");
         var target = $(".current-playing");
-<<<<<<< HEAD
         if (target && target.offset()) {
-=======
-        if (target) {
->>>>>>> b0c7b670... Merge Scroll to current playing track
             container.animate({
                 scrollTop: Math.floor(target.offset().top - 3.5 * target.height())
             }, 150, function() {
@@ -937,25 +912,25 @@
         }
     }
 
-<<<<<<< HEAD
     function isMouseOverTrackList() {
         return $('.playlistframe:hover').length > 0 && $('#playerControls:hover').length == 0;
     }
 
-=======
->>>>>>> b0c7b670... Merge Scroll to current playing track
+
     function getCurrentSongIndex() {
         return currentSongIndex;
     }
 
     function isAudioPlayerPlaying() {
         var isPlaying = $("#audioPlayer").get(0) &&
-<<<<<<< HEAD
             $("#audioPlayer").get(0).getPaused() == false;
-=======
+        return isPlaying;
+    }
+
+    function isAudioPlayerPlaying() {
+        var isPlaying = $("#audioPlayer").get(0) &&
             $("#audioPlayer").get(0).getPaused() != null &&
             !$("#audioPlayer").get(0).getPaused();
->>>>>>> b0c7b670... Merge Scroll to current playing track
         return isPlaying;
     }
 
