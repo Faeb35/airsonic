@@ -217,7 +217,7 @@
      * Callback function called when playback for the current song has started.
      */
     function onPlaying() {
-        updateCurrentImage();
+        highlightCurrentPlaying();
 
         if (currentSong) {
             updateWindowTitle(currentSong);
@@ -607,6 +607,7 @@
 
             if (i == currentSongIndex && $("#currentImage" + id)) {
                 $("#currentImage" + id).show();
+                $("#currentImage" + id).parents("tr").addClass("current-playing");
                 if (isJavaJukeboxPresent()) {
                     updateJavaJukeboxPlayerControlBar(song);
                 }
@@ -694,7 +695,7 @@
                 }
             }
         }
-        updateCurrentImage();
+        highlightCurrentPlaying();
         if (songs.length == 0) {
             $('#audioPlayer').get(0).stop();
         }
@@ -854,7 +855,7 @@
         }
     }
 
-    function updateCurrentImage() {
+    function highlightCurrentPlaying() {
         for (var i = 0; i < songs.length; i++) {
             var song  = songs[i];
             var id = i + 1;
@@ -862,8 +863,10 @@
 
             if (image) {
                 if (i == currentSongIndex) {
+                    image.parents("tr").addClass("current-playing");
                     image.show();
                 } else {
+                    image.parents("tr").removeClass("current-playing");
                     image.hide();
                 }
             }
