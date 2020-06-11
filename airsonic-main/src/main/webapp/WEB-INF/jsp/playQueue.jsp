@@ -53,13 +53,10 @@
 
     // Is the play queue visible? (Initially hidden if set to "auto-hide" in the settings)
     var isVisible = ${model.autoHide ? 'false' : 'true'};
-
-<<<<<<< HEAD
+    
     // initialize index of the song currently played
     var currentSongIndex = -1;
 
-=======
->>>>>>> de72a1c5... Scroll to current playing track
     // Should we scroll to the current playing track after onPlaying
     var isScrollToCurrentPlaying = false;
 
@@ -256,14 +253,6 @@
 
         // Whenever playback starts, show a notification for the current playing song.
         $('#audioPlayer').on("playing", onPlaying);
-
-        // Add click event listener to play button
-        $('.mejs__playpause-button').click(function() {
-            if (isAudioPlayerPlaying()) {
-                //scrollToCurrentPlaying();
-                isScrollToCurrentPlaying = true;
-            }
-        });
     }
 
     function getPlayQueue() {
@@ -333,8 +322,11 @@
 =======
                 isScrollToCurrentPlaying = true;
                 onStart();
+<<<<<<< HEAD
                 //scrollToCurrentPlaying();
 >>>>>>> de72a1c5... Scroll to current playing track
+=======
+>>>>>>> 894fefac... Scroll to current playing track improvement
             }
         } else {
             playQueueService.toggleStartStop(playQueueCallback);
@@ -405,16 +397,6 @@
             index = index % songs.length;
         }
 <<<<<<< HEAD
-        if (!isMouseOverTrackList()) {
-            isScrollToCurrentPlaying = true;
-        }
-=======
-        isScrollToCurrentPlaying = true;
->>>>>>> de72a1c5... Scroll to current playing track
-        onSkip(index);
-        //scrollToCurrentPlaying();
-    }
-    function onPrevious() {
 <<<<<<< HEAD
         if (!isMouseOverTrackList()) {
             isScrollToCurrentPlaying = true;
@@ -422,8 +404,28 @@
 =======
         isScrollToCurrentPlaying = true;
 >>>>>>> de72a1c5... Scroll to current playing track
+=======
+        if (!isMouseOverTrackList()) {
+            isScrollToCurrentPlaying = true;
+        }
+>>>>>>> 894fefac... Scroll to current playing track improvement
+        onSkip(index);
+    }
+    function onPrevious() {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        if (!isMouseOverTrackList()) {
+            isScrollToCurrentPlaying = true;
+        }
+=======
+        isScrollToCurrentPlaying = true;
+>>>>>>> de72a1c5... Scroll to current playing track
+=======
+        if (!isMouseOverTrackList()) {
+            isScrollToCurrentPlaying = true;
+        }
+>>>>>>> 894fefac... Scroll to current playing track improvement
         onSkip(parseInt(getCurrentSongIndex()) - 1);
-        //scrollToCurrentPlaying();
     }
     function onPlay(id) {
         playQueueService.play(id, playQueueCallback);
@@ -928,10 +930,14 @@
         var container = $("html,body");
         var target = $(".current-playing");
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (target && target.offset()) {
 =======
         if (target) {
 >>>>>>> de72a1c5... Scroll to current playing track
+=======
+        if (target && target.offset()) {
+>>>>>>> 894fefac... Scroll to current playing track improvement
             container.animate({
                 scrollTop: Math.floor(target.offset().top - 3.5 * target.height())
             }, 150, function() {
@@ -940,6 +946,10 @@
 <<<<<<< HEAD
 =======
         }
+    }
+
+    function isMouseOverTrackList() {
+        return $('.playlistframe:hover').length > 0 && $('#playerControls:hover').length == 0;
     }
 
     function getCurrentSongIndex() {
@@ -967,8 +977,7 @@
 
     function isAudioPlayerPlaying() {
         var isPlaying = $("#audioPlayer").get(0) &&
-            $("#audioPlayer").get(0).getPaused() != null &&
-            !$("#audioPlayer").get(0).getPaused();
+            $("#audioPlayer").get(0).getPaused() == false;
         return isPlaying;
     }
 
