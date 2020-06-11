@@ -224,6 +224,8 @@
         highlightCurrentPlaying();
         if (isScrollToCurrentPlaying) {
             scrollToCurrentPlaying();
+        } else if (!isMouseOverTrackList()) {
+            scrollToCurrentPlaying();
         }
 
         if (currentSong) {
@@ -251,14 +253,6 @@
 
         // Whenever playback starts, show a notification for the current playing song.
         $('#audioPlayer').on("playing", onPlaying);
-
-        // Add click event listener to play button
-        $('.mejs__playpause-button').click(function() {
-            if (isAudioPlayerPlaying()) {
-                //scrollToCurrentPlaying();
-                isScrollToCurrentPlaying = true;
-            }
-        });
     }
 
     function getPlayQueue() {
@@ -322,7 +316,6 @@
             } else {
                 isScrollToCurrentPlaying = true;
                 onStart();
-                //scrollToCurrentPlaying();
             }
         } else {
             playQueueService.toggleStartStop(playQueueCallback);
@@ -392,14 +385,16 @@
         } else if (wrap) {
             index = index % songs.length;
         }
-        isScrollToCurrentPlaying = true;
+        if (!isMouseOverTrackList()) {
+            isScrollToCurrentPlaying = true;
+        }
         onSkip(index);
-        //scrollToCurrentPlaying();
     }
     function onPrevious() {
-        isScrollToCurrentPlaying = true;
+        if (!isMouseOverTrackList()) {
+            isScrollToCurrentPlaying = true;
+        }
         onSkip(parseInt(getCurrentSongIndex()) - 1);
-        //scrollToCurrentPlaying();
     }
     function onPlay(id) {
         playQueueService.play(id, playQueueCallback);
@@ -899,7 +894,7 @@
     function scrollToCurrentPlaying() {
         var container = $("html,body");
         var target = $(".current-playing");
-        if (target) {
+        if (target && target.offset()) {
             container.animate({
                 scrollTop: Math.floor(target.offset().top - 3.5 * target.height())
             }, 150, function() {
@@ -908,14 +903,17 @@
         }
     }
 
+    function isMouseOverTrackList() {
+        return $('.playlistframe:hover').length > 0 && $('#playerControls:hover').length == 0;
+    }
+
     function getCurrentSongIndex() {
         return currentSongIndex;
     }
 
     function isAudioPlayerPlaying() {
         var isPlaying = $("#audioPlayer").get(0) &&
-            $("#audioPlayer").get(0).getPaused() != null &&
-            !$("#audioPlayer").get(0).getPaused();
+            $("#audioPlayer").get(0).getPaused() == false;
         return isPlaying;
     }
 
@@ -983,7 +981,7 @@
         </div>
     </c:when>
     <c:otherwise>
-        <div class="bgcolor2" style="position:fixed; bottom:0; width:100%;padding-top:10px;">
+        <div id="playerControls" class="bgcolor2" style="position:fixed; bottom:0; width:100%;padding-top:10px;">
             <table style="white-space:nowrap; margin-bottom:0;">
                 <tr style="white-space:nowrap;">
                     <c:if test="${model.user.settingsRole and fn:length(model.players) gt 1}">
