@@ -253,14 +253,6 @@
 
         // Whenever playback starts, show a notification for the current playing song.
         $('#audioPlayer').on("playing", onPlaying);
-
-        // Add click event listener to play button
-        $('.mejs__playpause-button').click(function() {
-            if (isAudioPlayerPlaying()) {
-                //scrollToCurrentPlaying();
-                isScrollToCurrentPlaying = true;
-            }
-        });
     }
 
     function getPlayQueue() {
@@ -400,10 +392,12 @@
         }
         onSkip(index);
     }
+
     function onPrevious() {
         if (!isMouseOverTrackList()) {
             isScrollToCurrentPlaying = true;
         }
+        onSkip(parseInt(getCurrentSongIndex()) - 1);
     }
     function onPlay(id) {
         playQueueService.play(id, playQueueCallback);
@@ -912,7 +906,7 @@
         }
     }
 
-    function isMouseOverTrackList() {
+     function isMouseOverTrackList() {
         return $('.playlistframe:hover').length > 0 && $('#playerControls:hover').length == 0;
     }
 
@@ -929,8 +923,7 @@
 
     function isAudioPlayerPlaying() {
         var isPlaying = $("#audioPlayer").get(0) &&
-            $("#audioPlayer").get(0).getPaused() != null &&
-            !$("#audioPlayer").get(0).getPaused();
+            $("#audioPlayer").get(0).getPaused() == false;
         return isPlaying;
     }
 
