@@ -182,7 +182,14 @@
     }
 
     function setFrameHeight(height) {
-        $("div.playqueue-container", window.parent.document).animate( { height: height + "px" }, { queue: false, duration: 400 } );
+        $("div.playqueue-container", window.parent.document).stop();
+        $("div.playqueue-container", window.parent.document).animate(
+            {
+                height: height + "px"
+            }, {
+                queue: false,
+                duration: 400
+            });
     }
 
     function startTimer() {
