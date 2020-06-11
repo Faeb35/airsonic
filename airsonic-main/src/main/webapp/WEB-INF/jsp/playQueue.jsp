@@ -147,6 +147,7 @@
 
     function onHidePlayQueue() {
       setFrameHeight(50);
+      $("html").css("overflow-y", "hidden");
       isVisible = false;
       $(".playqueue-shown").hide();
       $(".playqueue-hidden").show();
@@ -157,6 +158,7 @@
       height = Math.min(height, window.top.innerHeight * 0.8);
       setFrameHeight(height);
       scrollToCurrentPlaying();
+      $("html").css("overflow-y", "");
       isVisible = true;
       $(".playqueue-shown").show();
       $(".playqueue-hidden").hide();
@@ -175,6 +177,8 @@
         $(".playlistframe").mouseenter(function () {
             onShowPlayQueue();
         });
+
+        $("html").css("overflow-y", "hidden");
     }
 
     function setFrameHeight(height) {
