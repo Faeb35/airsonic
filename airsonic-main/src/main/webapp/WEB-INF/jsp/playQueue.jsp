@@ -390,6 +390,7 @@
         } else if (wrap) {
             index = index % songs.length;
         }
+
         if (!isMouseOverTrackList()) {
             isScrollToCurrentPlaying = true;
         }
@@ -913,15 +914,8 @@
         return $('.playlistframe:hover').length > 0 && $('#playerControls:hover').length == 0;
     }
 
-
     function getCurrentSongIndex() {
         return currentSongIndex;
-    }
-
-    function isAudioPlayerPlaying() {
-        var isPlaying = $("#audioPlayer").get(0) &&
-            $("#audioPlayer").get(0).getPaused() == false;
-        return isPlaying;
     }
 
     function isAudioPlayerPlaying() {
