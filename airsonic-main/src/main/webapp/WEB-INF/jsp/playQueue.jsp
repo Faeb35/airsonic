@@ -317,19 +317,10 @@
             if (isAudioPlayerPlaying()) {
                 onStop();
             } else {
-<<<<<<< HEAD
                 if (!isMouseOverTrackList()) {
                     isScrollToCurrentPlaying = true;
                 }
                 onStart();
-=======
-                isScrollToCurrentPlaying = true;
-                onStart();
-<<<<<<< HEAD
-                //scrollToCurrentPlaying();
->>>>>>> de72a1c5... Scroll to current playing track
-=======
->>>>>>> 894fefac... Scroll to current playing track improvement
             }
         } else {
             playQueueService.toggleStartStop(playQueueCallback);
@@ -399,35 +390,16 @@
         } else if (wrap) {
             index = index % songs.length;
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         if (!isMouseOverTrackList()) {
             isScrollToCurrentPlaying = true;
         }
-=======
-        isScrollToCurrentPlaying = true;
->>>>>>> de72a1c5... Scroll to current playing track
-=======
-        if (!isMouseOverTrackList()) {
-            isScrollToCurrentPlaying = true;
-        }
->>>>>>> 894fefac... Scroll to current playing track improvement
         onSkip(index);
     }
     function onPrevious() {
-<<<<<<< HEAD
-<<<<<<< HEAD
         if (!isMouseOverTrackList()) {
             isScrollToCurrentPlaying = true;
         }
-=======
-        isScrollToCurrentPlaying = true;
->>>>>>> de72a1c5... Scroll to current playing track
-=======
-        if (!isMouseOverTrackList()) {
-            isScrollToCurrentPlaying = true;
-        }
->>>>>>> 894fefac... Scroll to current playing track improvement
         onSkip(parseInt(getCurrentSongIndex()) - 1);
     }
     function onPlay(id) {
@@ -914,11 +886,7 @@
             var image = $("#currentImage" + id);
 
             if (image) {
-<<<<<<< HEAD
                 if (i == currentSongIndex) {
-=======
-                if (song.streamUrl == currentStreamUrl) {
->>>>>>> f09071dc... Hightlight table row with current playing track
                     image.parents("tr").addClass("current-playing");
                     image.show();
                 } else {
@@ -932,35 +900,12 @@
     function scrollToCurrentPlaying() {
         var container = $("html,body");
         var target = $(".current-playing");
-<<<<<<< HEAD
-<<<<<<< HEAD
         if (target && target.offset()) {
-=======
-        if (target) {
->>>>>>> de72a1c5... Scroll to current playing track
-=======
-        if (target && target.offset()) {
->>>>>>> 894fefac... Scroll to current playing track improvement
             container.animate({
                 scrollTop: Math.floor(target.offset().top - 3.5 * target.height())
             }, 150, function() {
                 isScrollToCurrentPlaying = false;
             });
-<<<<<<< HEAD
-=======
-        }
-    }
-
-    function isMouseOverTrackList() {
-        return $('.playlistframe:hover').length > 0 && $('#playerControls:hover').length == 0;
-    }
-
-    function getCurrentSongIndex() {
-        for (var i = 0; i < songs.length; i++) {
-            if (songs[i].streamUrl == currentStreamUrl) {
-                return i;
-            }
->>>>>>> de72a1c5... Scroll to current playing track
         }
     }
 
@@ -970,12 +915,6 @@
 
     function getCurrentSongIndex() {
         return currentSongIndex;
-    }
-
-    function isAudioPlayerPlaying() {
-        var isPlaying = $("#audioPlayer").get(0) &&
-            $("#audioPlayer").get(0).getPaused() == false;
-        return isPlaying;
     }
 
     function isAudioPlayerPlaying() {
