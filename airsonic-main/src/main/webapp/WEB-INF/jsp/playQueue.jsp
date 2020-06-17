@@ -54,6 +54,9 @@
     // Is the play queue visible? (Initially hidden if set to "auto-hide" in the settings)
     var isVisible = ${model.autoHide ? 'false' : 'true'};
 
+    // initialize index of the song currently played
+    var currentSongIndex = -1;
+
     // Initialize the Cast player (ChromeCast support)
     var CastPlayer = new CastPlayer();
 
@@ -509,6 +512,7 @@
 
     function playQueueCallback(playQueue) {
         songs = playQueue.entries;
+        currentSongIndex = playQueue.index;
         repeatEnabled = playQueue.repeatEnabled;
         shuffleRadioEnabled = playQueue.shuffleRadioEnabled;
         internetRadioEnabled = playQueue.internetRadioEnabled;
@@ -601,7 +605,7 @@
                 $("#songIndex" + id).hide();
             }
 
-            if ($("#currentImage" + id) && song.streamUrl == currentStreamUrl) {
+            if (i == currentSongIndex && $("#currentImage" + id)) {
                 $("#currentImage" + id).show();
                 if (isJavaJukeboxPresent()) {
                     updateJavaJukeboxPlayerControlBar(song);
@@ -788,6 +792,7 @@
 
         // Set the current song, index and URL as global variables
         currentSong = songs[index];
+        currentSongIndex = index;
         currentStreamUrl = currentSong.streamUrl;
 
         // Run player-specific preparation code
@@ -857,7 +862,7 @@
             var image = $("#currentImage" + id);
 
             if (image) {
-                if (song.streamUrl == currentStreamUrl) {
+                if (i == currentSongIndex) {
                     image.show();
                 } else {
                     image.hide();
@@ -867,12 +872,7 @@
     }
 
     function getCurrentSongIndex() {
-        for (var i = 0; i < songs.length; i++) {
-            if (songs[i].streamUrl == currentStreamUrl) {
-                return i;
-            }
-        }
-        return -1;
+        return currentSongIndex;
     }
 
     <!-- actionSelected() is invoked when the users selects from the "More actions..." combo box. -->
