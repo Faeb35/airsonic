@@ -53,6 +53,12 @@
 
     // Is the play queue visible? (Initially hidden if set to "auto-hide" in the settings)
     var isVisible = ${model.autoHide ? 'false' : 'true'};
+    
+    // initialize index of the song currently played
+    var currentSongIndex = -1;
+
+    // Should we scroll to the current playing track after onPlaying
+    var isScrollToCurrentPlaying = false;
 
     // initialize index of the song currently played
     var currentSongIndex = -1;
@@ -910,7 +916,7 @@
         }
     }
 
-     function isMouseOverTrackList() {
+    function isMouseOverTrackList() {
         return $('.playlistframe:hover').length > 0 && $('#playerControls:hover').length == 0;
     }
 
