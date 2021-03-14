@@ -532,7 +532,7 @@
         }
         playlistService.appendToPlaylist(playlistId, mediaFileIds, function (){
             top.left.updatePlaylists();
-            top.main.location.href = "playlist.view?id=" + playlistId;
+            //top.main.location.href = "playlist.view?id=" + playlistId;
             $().toastmessage("showSuccessToast", "<fmt:message key="playlist.toast.appendtoplaylist"/>");
         });
     }
